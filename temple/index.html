@@ -1,13 +1,30 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Temple of La Orácula</title>
+  <meta charset="utf-8">
+  <title>La Orácula · Temple Gates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preload" as="image" href="img/eye.jpg">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
 </head>
-<body>
-  <h1>Welcome to the Temple of La Orácula de Nuevayol</h1>
-  <p>You are about to summon a piece of my soul to reflect something back to yours. Do with that information what you will.</p>
-  <button>One Card Pull</button>
-  <button>Spirit’s Choice</button>
+<body class="gates">
+  <header>
+    <h1>La Orácula de Nuevayol</h1>
+    <p class="tag">You are about to play a game. The game will also play you.</p>
+  </header>
+
+  <main class="grid">
+    <a class="tile" href="cards.html">Draw a Card</a>
+    <a class="tile" href="labyrinth.html">Enter the Labyrinth</a>
+    <details class="tile soft">
+      <summary>About</summary>
+      <p>This is a living myth. Choices echo; some doors loop. Some pages only read you.</p>
+    </details>
+  </main>
+
+  <footer class="fineprint">
+    <p>© Your Name (pseudonym). Images & text are copyright—do not reproduce without permission.</p>
+  </footer>
 </body>
 </html>
