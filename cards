@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>La Orácula · Draw</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body class="cards">
+  <header>
+    <h1>The Oracle’s Deck</h1>
+    <p>Choose: a single card… or <em>Spirit’s Choice</em> (three).</p>
+  </header>
+
+  <main>
+    <div class="controls">
+      <button data-pull="1">One Card</button>
+      <button data-pull="3">Spirit’s Choice</button>
+    </div>
+
+    <section id="spread" class="spread" aria-live="polite"></section>
+
+    <details class="soft">
+      <summary>How it works</summary>
+      <p>Cards are drawn pseudo-randomly on your device from a local manifest you control.</p>
+    </details>
+  </main>
+
+  <footer class="backlinks">
+    <a href="index.html">⟵ Temple Gates</a>
+  </footer>
+</body>
+</html>
