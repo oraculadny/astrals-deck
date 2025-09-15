@@ -1,33 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"><title>Random Card</title>
+  <meta charset="UTF-8">
+  <title>Random Tarot Cards</title>
   <style>
     body{font-family:sans-serif;text-align:center;padding:2rem;background:#fafafa}
-    img{max-width:250px;height:auto;margin:1rem}
-    button{padding:.5rem 1rem;font-size:1rem}
+    .cards{display:flex;flex-wrap:wrap;justify-content:center;gap:1.5rem;margin-top:1rem}
+    .card{border:1px solid #ddd;border-radius:8px;padding:1rem;width:260px;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.05)}
+    .card img{max-width:100%;height:auto;border-radius:4px}
+    .buttons{margin-top:1rem}
+    button{padding:.6rem 1.2rem;margin:0 .5rem;font-size:1rem;cursor:pointer;border:none;border-radius:4px;background:#0066ff;color:#fff}
+    button:hover{background:#0052cc}
   </style>
 </head>
 <body>
-  <h1 id="title">Loading…</h1>
-  <img id="img" src="" alt="">
-  <p id="meaning"></p>
-  <button onclick="draw()">One Card Pull</button>
 
-  <script>
-    let cards = [];
-    async function load() {
-      const r = await fetch('cards.json');
-      cards = await r.json();
-      draw();               // show first card automatically
-    }
-    function draw() {
-      const c = cards[Math.floor(Math.random()*cards.length)];
-      document.getElementById('title').textContent = c.title;
-      document.getElementById('img').src = c.image;
-      document.getElementById('meaning').textContent = c.meaning;
-    }
-    load();
-  </script>
+<h1>Tarot Card Draw</h1>
+
+<div class="buttons">
+  <button id="drawOne">One for One</button>
+  <button id="drawThree">City's Choice</button>
+</div>
+
+<div id="output" class="cards"></div>
+
+<script>
+  // ---------- 1️⃣ Load the JSON once ----------
+  let deck = [];
+
+  async function loadDeck() {
+    const resp = await fetch('cards.json');   // path works for Vite, Next, static export, etc.
+    deck = await resp.json();
+  }
+
+  // ---------- 2️⃣ Helper: pick N unique random cards ----------
+  function pickRandom(n) {
+    // Guard against n > deck size
+    const count = Math.min(n, deck.length);
+    const shuffled = [...deck].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, count);
+  }
+
+  // ---------- 3️⃣ Render helpers ----------
+  function renderCards(cards) {
+    const container = document.getElementById('output');
+    container.innerHTML = '';                     // clear previous results
+    cards.forEach(card => {
+      const el = document.createElement('div');
+      el.className = 'card';
+      el.innerHTML = `
+        <h2>${card.title}</h2>
+        <img src="${card.image}" alt="${card.title}">
+        <p>${card.meaning}</p>
+      `;
+      container.appendChild(el);
+    });
+  }
+
+  // ---------- 4️⃣ Button actions ----------
+  document.getElementById('drawOne').addEventListener('click', () => {
+    const [c] = pickRandom(1);
+    renderCards([c]);
+  });
+
+  document.getElementById('drawThree').addEventListener('click', () => {
+    const three = pickRandom(3);
+    renderCards(three);
+  });
+
+  // ---------- 5️⃣ Initialise ----------
+  loadDeck().catch(err => {
+    console.error('Failed to load cards.json', err);
+    document.getElementById('output').innerText = '❌ Could not load card data.';
+  });
+</script>
+
 </body>
 </html>
